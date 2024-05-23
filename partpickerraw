@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Component Selector</title>
+</head>
+<body>
+    <form id="component-selector-form">
+        <!-- CPU Selection -->
+        <label for="cpu-generation">CPU Generation:</label>
+        <select id="cpu-generation" name="cpu-generation">
+            <option value="">Select CPU Generation</option>
+            <option value="gen9">9th Gen</option>
+            <option value="gen10">10th Gen</option>
+            <option value="gen11">11th Gen</option>
+        </select>
+
+        <label for="cpu">CPU:</label>
+        <select id="cpu" name="cpu" disabled>
+            <option value="0">Select a CPU</option>
+        </select>
+
+        <!-- RAM Selection -->
+        <label for="ram-generation">RAM Generation:</label>
+        <select id="ram-generation" name="ram-generation">
+            <option value="">Select RAM Generation</option>
+            <option value="ddr4">DDR4</option>
+            <option value="ddr5">DDR5</option>
+        </select>
+
+        <label for="ram">RAM:</label>
+        <select id="ram" name="ram" disabled>
+            <option value="0">Select RAM</option>
+        </select>
+
+        <!-- Fan Size Selection -->
+        <label for="fan-size">Fan Size:</label>
+        <select id="fan-size" name="fan-size">
+            <option value="">Select Fan Size</option>
+            <option value="120">120mm</option>
+            <option value="140">140mm</option>
+        </select>
+
+        <label for="fan">Fan:</label>
+        <select id="fan" name="fan" disabled>
+            <option value="0">Select Fan</option>
+        </select>
+
+        <!-- Case Form Factor -->
+        <label for="case-form-factor">Case Form Factor:</label>
+        <select id="case-form-factor" name="case-form-factor">
+            <option value="">Select Case Form Factor</option>
+            <option value="atx">ATX</option>
+            <option value="micro-atx">Micro-ATX</option>
+            <option value="mini-itx">Mini-ITX</option>
+        </select>
+
+        <label for="case">Case:</label>
+        <select id="case" name="case" disabled>
+            <option value="0">Select Case</option>
+        </select>
+
+        <!-- Motherboard Form Factor -->
+        <label for="motherboard-form-factor">Motherboard Form Factor:</label>
+        <select id="motherboard-form-factor" name="motherboard-form-factor">
+            <option value="">Select Motherboard Form Factor</option>
+            <option value="atx">ATX</option>
+            <option value="micro-atx">Micro-ATX</option>
+            <option value="mini-itx">Mini-ITX</option>
+        </select>
+
+        <label for="motherboard">Motherboard:</label>
+        <select id="motherboard" name="motherboard" disabled>
+            <option value="0">Select a Motherboard</option>
+        </select>
+
+        <!-- Cooler Selection -->
+        <label for="cooler-type">Cooler Type:</label>
+        <select id="cooler-type" name="cooler-type">
+            <option value="">Select Cooler Type</option>
+            <option value="air">Air Cooler</option>
+            <option value="aio">AIO</option>
+        </select>
+
+        <label for="cooler">Cooler:</label>
+        <select id="cooler" name="cooler" disabled>
+            <option value="0">Select a Cooler</option>
+        </select>
+
+        <!-- GPU Selection -->
+        <label for="gpu-series">GPU Series:</label>
+        <select id="gpu-series" name="gpu-series">
+            <option value="">Select GPU Series</option>
+            <option value="gtx">GTX</option>
+            <option value="rtx">RTX</option>
+        </select>
+
+        <label for="gpu">GPU:</label>
+        <select id="gpu" name="gpu" disabled>
+            <option value="0">Select a GPU</option>
+        </select>
+
+        <!-- Storage Selection -->
+        <label for="storage-type">Storage Type:</label>
+        <select id="storage-type" name="storage-type">
+            <option value="">Select Storage Type</option>
+            <option value="ssd">SSD</option>
+            <option value="hdd">HDD</option>
+        </select>
+
+        <label for="storage">Storage:</label>
+        <select id="storage" name="storage" disabled>
+            <option value="0">Select Storage</option>
+        </select>
+
+        <!-- Power Supply -->
+        <label for="power-supply">Power Supply:</label>
+        <select id="power-supply" name="power-supply">
+            <option value="0">Select a Power Supply</option>
+            <option value="50">PSU 500W - $50</option>
+            <option value="100">PSU 750W - $100</option>
+        </select>
+
+        <!-- Accessories -->
+        <label for="accessories">Accessories:</label>
+        <select id="accessories" name="accessories">
+            <option value="0">Select Accessories</option>
+            <option value="15">Accessory A - $15</option>
+            <option value="30">Accessory B - $30</option>
+        </select>
+
+        <p>Total Price: $<span id="total-price">0</span></p>
+        <button type="button" id="add-to-cart-button">Add to Cart</button>
+        <button type="button" id="checkout-button" style="display: none;">Go to Cart</button>
+    </form>
+
+    <style>
+        #component-selector-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        #component-selector-form label {
+            font-weight: bold;
+        }
+
+        #component-selector-form select {
+            padding: 5px;
+            font-size: 16px;
+        }
+
+        #total-price {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        button {
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+
+    <script>
+        const cpuOptions = {
+            gen9: [
+                { value: '100', text: 'Intel i5 9600K - $100' },
+                { value: '200', text: 'Intel i7 9700K - $200' },
+            ],
+            gen10: [
+                { value: '150', text: 'Intel i5 10600K - $150' },
+                { value: '250', text: 'Intel i7 10700K - $250' },
+            ],
+            gen11: [
+                { value: '200', text: 'Intel i5 11600K - $200' },
+                { value: '300', text: 'Intel i7 11700K - $300' },
+            ]
+        };
+
+        const ramOptions = {
+            ddr4: [
+                { value: '50', text: '8GB DDR4 - $50' },
+                { value: '100', text: '16GB DDR4 - $100' },
+            ],
+            ddr5: [
+                { value: '100', text: '8GB DDR5 - $100' },
+                { value: '200', text: '16GB DDR5 - $200' },
+            ]
+        };
+
+        const fanOptions = {
+            '120': [
+                { value: '20', text: '120mm Fan A - $20' },
+                { value: '30', text: '120mm Fan B - $30' },
+            ],
+            '140': [
+                { value: '25', text: '140mm Fan A - $25' },
+                { value: '35', text: '140mm Fan B - $35' },
+            ]
+        };
+
+        const caseOptions = {
+            'atx': [
+                { value: '70', text: 'ATX Case A - $70' },
+                { value: '100', text: 'ATX Case B - $100' },
+            ],
+            'micro-atx': [
+                { value: '60', text: 'Micro-ATX Case A - $60' },
+                { value: '90', text: 'Micro-ATX Case B - $90' },
+            ],
+            'mini-itx': [
+                { value: '50', text: 'Mini-ITX Case A - $50' },
+                { value: '80', text: 'Mini-ITX Case B - $80' },
+            ]
+        };
+
+        const motherboardOptions = {
+            'atx': [
+                { value: '150', text: 'ATX Motherboard A - $150' },
+                { value: '200', text: 'ATX Motherboard B - $200' },
+            ],
+            'micro-atx': [
+                { value: '130', text: 'Micro-ATX Motherboard A - $130' },
+                { value: '180', text: 'Micro-ATX Motherboard B - $180' },
+            ],
+            'mini-itx': [
+                { value: '120', text: 'Mini-ITX Motherboard A - $120' },
+                { value: '170', text: 'Mini-ITX Motherboard B - $170' },
+            ]
+        };
+
+        const coolerOptions = {
+            'air': [
+                { value: '40', text: 'Air Cooler A - $40' },
+                { value: '60', text: 'Air Cooler B - $60' },
+            ],
+            'aio': [
+                { value: '80', text: 'AIO Cooler A - $80' },
+                { value: '100', text: 'AIO Cooler B - $100' },
+            ]
+        };
+
+        const gpuOptions = {
+            'gtx': [
+                { value: '200', text: 'GTX 1660 - $200' },
+                { value: '300', text: 'GTX 1660 Ti - $300' },
+            ],
+            'rtx': [
+                { value: '400', text: 'RTX 2060 - $400' },
+                { value: '500', text: 'RTX 2070 - $500' },
+            ]
+        };
+
+        const storageOptions = {
+            'ssd': [
+                { value: '100', text: '500GB SSD - $100' },
+                { value: '200', text: '1TB SSD - $200' },
+            ],
+            'hdd': [
+                { value: '50', text: '1TB HDD - $50' },
+                { value: '100', text: '2TB HDD - $100' },
+            ]
+        };
+
+        function populateOptions(selectElement, options) {
+            selectElement.innerHTML = '<option value="0">Select an option</option>';
+            options.forEach(option => {
+                const optionElement = document.createElement('option');
+                optionElement.value = option.value;
+                optionElement.textContent = option.text;
+                selectElement.appendChild(optionElement);
+            });
+            selectElement.disabled = false;
+        }
+
+        document.getElementById('cpu-generation').addEventListener('change', function() {
+            const selectedGeneration = this.value;
+            const cpuSelect = document.getElementById('cpu');
+            if (selectedGeneration) {
+                populateOptions(cpuSelect, cpuOptions[selectedGeneration]);
+            } else {
+                cpuSelect.innerHTML = '<option value="0">Select a CPU</option>';
+                cpuSelect.disabled = true;
+            }
+            calculateTotalPrice();
+        });
+
+        document.getElementById('ram-generation').addEventListener('change', function() {
+            const selectedGeneration = this.value;
+            const ramSelect = document.getElementById('ram');
+            if (selectedGeneration) {
+                populateOptions(ramSelect, ramOptions[selectedGeneration]);
+            } else {
+                ramSelect.innerHTML = '<option value="0">Select RAM</option>';
+                ramSelect.disabled = true;
+            }
+            calculateTotalPrice();
+        });
+
+        document.getElementById('fan-size').addEventListener('change', function() {
+            const selectedSize = this.value;
+            const fanSelect = document.getElementById('fan');
+            if (selectedSize) {
+                populateOptions(fanSelect, fanOptions[selectedSize]);
+            } else {
+                fanSelect.innerHTML = '<option value="0">Select Fan</option>';
+                fanSelect.disabled = true;
+            }
+            calculateTotalPrice();
+        });
+
+        document.getElementById('case-form-factor').addEventListener('change', function() {
+            const selectedFormFactor = this.value;
+            const caseSelect = document.getElementById('case');
+            if (selectedFormFactor) {
+                populateOptions(caseSelect, caseOptions[selectedFormFactor]);
+            } else {
+                caseSelect.innerHTML = '<option value="0">Select Case</option>';
+                caseSelect.disabled = true;
+            }
+            calculateTotalPrice();
+        });
+
+        document.getElementById('motherboard-form-factor').addEventListener('change', function() {
+            const selectedFormFactor = this.value;
+            const motherboardSelect = document.getElementById('motherboard');
+            if (selectedFormFactor) {
+                populateOptions(motherboardSelect, motherboardOptions[selectedFormFactor]);
+            } else {
+                motherboardSelect.innerHTML = '<option value="0">Select Motherboard</option>';
+                motherboardSelect.disabled = true;
+            }
+            calculateTotalPrice();
+        });
+
+        document.getElementById('cooler-type').addEventListener('change', function() {
+            const selectedType = this.value;
+            const coolerSelect = document.getElementById('cooler');
+            if (selectedType) {
+                populateOptions(coolerSelect, coolerOptions[selectedType]);
+            } else {
+                coolerSelect.innerHTML = '<option value="0">Select Cooler</option>';
+                coolerSelect.disabled = true;
+            }
+            calculateTotalPrice();
+        });
+
+        document.getElementById('gpu-series').addEventListener('change', function() {
+            const selectedSeries = this.value;
+            const gpuSelect = document.getElementById('gpu');
+            if (selectedSeries) {
+                populateOptions(gpuSelect, gpuOptions[selectedSeries]);
+            } else {
+                gpuSelect.innerHTML = '<option value="0">Select GPU</option>';
+                gpuSelect.disabled = true;
+            }
+            calculateTotalPrice();
+        });
+
+        document.getElementById('storage-type').addEventListener('change', function() {
+            const selectedType = this.value;
+            const storageSelect = document.getElementById('storage');
+            if (selectedType) {
+                populateOptions(storageSelect, storageOptions[selectedType]);
+            } else {
+                storageSelect.innerHTML = '<option value="0">Select Storage</option>';
+                storageSelect.disabled = true;
+            }
+            calculateTotalPrice();
+        });
+
+        const allSelectors = document.querySelectorAll('#component-selector-form select');
+        allSelectors.forEach(selector => {
+            selector.addEventListener('change', calculateTotalPrice);
+        });
+
+        function calculateTotalPrice() {
+            let totalPrice = 0;
+            allSelectors.forEach(selector => {
+                totalPrice += parseInt(selector.value) || 0;
+            });
+            document.getElementById('total-price').textContent = totalPrice;
+        }
+
+        document.getElementById('add-to-cart-button').addEventListener('click', function() {
+            const selectedComponents = {};
+            allSelectors.forEach(selector => {
+                const componentType = selector.id.replace(/-/g, ' ');
+                const componentValue = selector.options[selector.selectedIndex].text;
+                selectedComponents[componentType] = componentValue;
+            });
+
+            localStorage.setItem('selectedComponents', JSON.stringify(selectedComponents));
+            alert('Components added to cart!');
+
+            document.getElementById('checkout-button').style.display = 'inline-block';
+        });
+
+        document.getElementById('checkout-button').addEventListener('click', function() {
+            const selectedComponents = JSON.parse(localStorage.getItem('selectedComponents'));
+            let checkoutUrl = 'checkout.html?';
+
+            for (const [component, value] of Object.entries(selectedComponents)) {
+                checkoutUrl += `${encodeURIComponent(component)}=${encodeURIComponent(value)}&`;
+            }
+
+            window.location.href = checkoutUrl.slice(0, -1);
+        });
+    </script>
+</body>
+</html>
