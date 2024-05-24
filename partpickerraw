@@ -1,10 +1,13 @@
+// ALL PARTS AND $ VALUES ARE PLACEHOLDER/POPULATE WITH INVENTORY ACCORDINGLY
+
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>Component Selector</title>
 </head>
 <body>
-    <form id="component-selector-form">
+    <form id="component-selector-form">  //Form to display and select hardware types 
         <!-- CPU Selection -->
         <label for="cpu-generation">CPU Generation:</label>
         <select id="cpu-generation" name="cpu-generation">
@@ -132,7 +135,7 @@
         <button type="button" id="add-to-cart-button">Add to Cart</button>
         <button type="button" id="checkout-button" style="display: none;">Go to Cart</button>
     </form>
-
+// Generic Display/Dropdown positioning/appending
     <style>
         #component-selector-form {
             display: flex;
@@ -161,7 +164,7 @@
             cursor: pointer;
         }
     </style>
-
+// Hardware options based on hardware type selection
     <script>
         const cpuOptions = {
             gen9: [
